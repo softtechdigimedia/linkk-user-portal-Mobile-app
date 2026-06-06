@@ -25,6 +25,7 @@ import { ProductCard } from './components/ProductCard';
 import { LabPackageSlider } from './components/LabPackageSlider';
 import { BottomNavigation } from './components/BottomNavigation';
 import { AuthFlow } from './components/AuthFlow';
+import { OnboardingFlow } from './components/OnboardingFlow';
 
 // Modals
 import { 
@@ -73,6 +74,9 @@ export default function App() {
   const [isPoliciesModalOpen, setIsPoliciesModalOpen] = useState(false);
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
   const [isLogoutModalOpen, setIsLogoutModalOpen] = useState(false);
+    const [isOnboardingCompleted, setIsOnboardingCompleted] = useState<boolean>(() => {
+    return localStorage.getItem('linkk_onboarding_completed') === 'true';
+  });
   const [isLoggedIn, setIsLoggedIn] = useState<boolean>(() => {
     return localStorage.getItem('linkk_is_logged_in') === 'true';
   });
@@ -359,7 +363,14 @@ export default function App() {
         id="applet-viewport-frame"
         className="w-full max-w-[380px] bg-white relative flex flex-col h-full md:h-[630px] md:max-h-[90vh] md:rounded-[48px] md:border-[12px] md:border-[#1a1a1a] shadow-[0_25px_50px_-12px_rgba(128,0,0,0.12)] overflow-hidden z-10 shrink-0 transform"
       >
-        {!isLoggedIn ? (
+        {!isOnboardingCompleted ? (
+          <OnboardingFlow 
+            onComplete={() => {
+              setIsOnboardingCompleted(true);
+              localStorage.setItem('linkk_onboarding_completed', 'true');
+            }}
+          />
+        ) : !isLoggedIn ? (
           <AuthFlow 
             onLoginSuccess={(phoneOrEmail) => {
               setIsLoggedIn(true);
@@ -1104,8 +1115,10 @@ export default function App() {
                 setPrescriptions([]);
                 setUserPhone('9999999991');
                 setIsLoggedIn(false);
+                setIsOnboardingCompleted(false);
                 localStorage.removeItem('linkk_is_logged_in');
                 localStorage.removeItem('linkk_user_phone');
+                localStorage.removeItem('linkk_onboarding_completed');
                 setIsDeleteModalOpen(false);
                 addSystemNotification(
                   'Account Purged Successfully',
