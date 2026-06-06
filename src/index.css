@@ -1,0 +1,63 @@
+@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Playfair+Display:ital,wght@0,400..900;1,400..900&family=JetBrains+Mono:wght@400;500;600&display=swap');
+@import "tailwindcss";
+
+@theme {
+  --font-sans: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  --font-serif: 'Playfair Display', Georgia, serif;
+  --font-mono: 'JetBrains Mono', ui-monospace, SFMono-Regular, monospace;
+  --color-maroon: #800000;
+  --color-maroon-light: #fdf2f2;
+  --color-maroon-mid: #e5cfcf;
+}
+
+html, body, #root {
+  height: 100%;
+  width: 100%;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+  background-color: #f7f7f7;
+  position: fixed;
+}
+
+/* Bento style card classes */
+.bento-card {
+  background-color: #ffffff;
+  border: 1.5px solid #e5cfcf;
+  border-radius: 20px;
+  padding: 16px;
+  transition: all 0.2s ease-in-out;
+}
+
+.bento-card-maroon {
+  background-color: #800000;
+  color: #ffffff;
+  border-radius: 20px;
+  padding: 16px;
+  transition: all 0.2s ease-in-out;
+}
+
+/* Custom scrollbar hides */
+.scrollbar-none::-webkit-scrollbar {
+  display: none;
+}
+.scrollbar-none {
+  -ms-overflow-style: none;  /* IE and Edge */
+  scrollbar-width: none;  /* Firefox */
+}
+
+/* Pulse keyframes for a soft glow in maroon states */
+@keyframes soft-pulse {
+  0%, 100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+  50% {
+    transform: scale(1.03);
+    opacity: 0.9;
+  }
+}
+
+.animate-soft-pulse {
+  animation: soft-pulse 2s infinite ease-in-out;
+}
